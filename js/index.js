@@ -43,8 +43,6 @@
       if(terminoBuscar != ""){
          terminos.forEach((termino)=>{
             const titulo = termino.firstElementChild.innerText.toLowerCase();
-            console.log(titulo);
-            console.log(terminoBuscar);
             if(!titulo.includes(terminoBuscar)){
                termino.style.display = "none";
             } 
@@ -66,21 +64,55 @@
 
 
 
- window.addEventListener('load',() => {
-   const $loader = d.querySelector('.loader'),
-      $image = d.querySelector('.loader__img'),
-      $enterCount = d.querySelector('.enter-count');
-   let timeLeft = 5;   //-->5
+ document.addEventListener('click',(e) => {
 
-   $image.setAttribute('src','img/website-construction.jpg');
-   setTimeout(() => {
-      $image.classList.replace('loader__img','loader2__img');
-   }, 50);
-   setInterval(() => {
-      $enterCount.textContent = `${timeLeft--} seconds to go!`;
-   }, 1000);
-   setTimeout(() => {
-      $loader.classList.toggle('loader2');
-   }, 6500);
+   let listaTerminos = document.querySelectorAll('.services__item');
+   
+   listaTerminos.forEach((termino)=>{
+      const $divTermino = termino.firstElementChild,
+         $termEspaniol = $divTermino.firstElementChild,
+         $termIngles = $divTermino.lastElementChild;
+      if(e.target == termino ||
+         e.target == $divTermino  || 
+         e.target == $termEspaniol ||
+         e.target == $termIngles) {
+           
+         const $loader = document.querySelector('.loader'),
+            $btnSalir = $loader.firstElementChild,
+            $contContenido = $loader.lastElementChild,
+            $contenido = $contContenido.firstElementChild,
+            $titulo =  $contenido.firstElementChild,
+            $tituloIngles = $contenido.lastElementChild,
+            $descripcion = $contContenido.lastElementChild;
+         console.log($loader);
+         $loader.classList.remove('loader');
+         $loader.classList.add('loader2');
+
+         const $tituloTermino = termino.firstElementChild,
+            $tituloES = $tituloTermino.firstElementChild,
+            $tituloEN = $tituloTermino.lastElementChild,
+            $banner = termino.lastElementChild;
+         $titulo.innerText = $tituloES.innerText;
+         $tituloIngles.innerText = $tituloEN.innerText;
+         $descripcion.innerText = $banner.innerText;
+      
+         $btnSalir.addEventListener('click',()=>{
+            $loader.classList.remove('loader2');
+         $loader.classList.add('loader');
+         })
+      }
+   });
+   
 });
+
+
+// setTimeout(() => {
+//       $image.classList.replace('loader__img','loader2__img');
+//    }, 50);
+//    setInterval(() => {
+//       $enterCount.textContent = `${timeLeft--} seconds to go!`;
+//    }, 1000);
+//    setTimeout(() => {
+//       $loader.classList.toggle('loader2');
+//    }, 6500);
 
